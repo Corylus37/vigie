@@ -204,6 +204,18 @@ details p{padding-bottom:20px;color:var(--ink-soft);max-width:var(--read)}
 .live-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
 .live-empty{padding:28px;text-align:center;color:var(--ink-soft)}
 
+/* Pourquoi Vigie */
+.name{padding-block:clamp(36px,6vw,64px);border-top:1px solid var(--rule)}
+.name-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:760px){.name-grid{grid-template-columns:1fr;gap:10px}}
+.name h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+.name-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 40px;margin-top:18px}
+@media (max-width:820px){.name-body{grid-template-columns:1fr}}
+.name-body p{color:var(--ink-soft);max-width:var(--read)}
+.name-body p strong{color:var(--ink);font-weight:600}
+.def{font-family:var(--mono);font-size:.85rem;color:var(--ink-soft);margin-top:10px}
+.def i{font-style:normal;color:var(--sea)}
+
 /* Pied */
 footer{background:var(--ink);color:var(--paper)}
 footer .wrap{padding-block:56px 40px;display:grid;gap:32px}
@@ -259,6 +271,20 @@ footer .logo-tile{fill:#1C4F7A}
           <span><i class="sw" style="background:color-mix(in srgb,var(--good) 35%,transparent);height:10px"></i>Vigie investie</span>
         </figcaption>
       </figure>
+    </div>
+  </section>
+
+  <section class="name" id="nom" aria-labelledby="nom-t">
+    <div class="wrap name-grid">
+      <div class="bearing label" style="padding-top:10px;border-top:2px solid var(--ink)">Le nom</div>
+      <div>
+        <h2 id="nom-t">Pourquoi « Vigie » ?</h2>
+        <p class="def"><i>vigie</i> (n. f.) · marin posté en haut du mât pour surveiller l'horizon.</p>
+        <div class="name-body">
+          <p>Sur un navire, la vigie ne tient pas la barre et ne s'agite pas. Elle observe l'horizon et <strong>ne donne l'alerte que lorsqu'elle voit quelque chose de net</strong> : une terre, un récif, un changement de temps.</p>
+          <p>Le robot fait la même chose avec le marché. Une fois par jour, il regarde. Il ne signale un changement de cap que lorsque la tendance est claire, et ignore le bruit des mouvements de la journée. Le reste du temps, il veille.</p>
+        </div>
+      </div>
     </div>
   </section>
 
