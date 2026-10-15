@@ -233,7 +233,7 @@ footer .brand{color:var(--paper)}
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="status"><span class="dot" aria-hidden="true"></span><span id="status-text">Test sur papier en cours · aucun argent réel engagé</span></span>
+        <span class="status"><span class="dot" aria-hidden="true"></span><span id="status-text">Test en direct · petite somme réelle engagée depuis le 15 octobre</span></span>
         <h1>Une décision<br>par jour.<br><em>Pas plus.</em></h1>
         <p class="lede">Vigie est un robot de suivi de tendance sur <strong>Bitcoin, Ethereum et Solana</strong>. Chaque nuit à minuit UTC, il regarde la clôture et choisit : investi ou à l'abri en stablecoin. Ses règles sont publiques, ses résultats sont vérifiables et <strong>ses défauts sont écrits noir sur blanc</strong> sur cette page.</p>
         <div class="cta">
@@ -277,7 +277,7 @@ footer .brand{color:var(--paper)}
         <div class="bearing label">Cap 01 · En direct</div>
         <div>
           <h2 id="suivi-t">Le test en direct</h2>
-          <p class="intro">Depuis le 14 octobre 2026, Vigie tourne sur son serveur avec les vrais prix du marché et un capital fictif de 1 000 $. Chaque journée clôturée s'ajoute ici, tirée directement de son journal, à côté de ce qu'aurait donné « acheter et garder » sur la même période.</p>
+          <p class="intro">Depuis le 14 octobre 2026, Vigie tourne sur son serveur avec les vrais prix du marché et un capital fictif de 1 000 $. Chaque journée clôturée s'ajoute ici, tirée directement de son journal, à côté de ce qu'aurait donné « acheter et garder » sur la même période. Depuis le 15 octobre, une petite somme réelle suit exactement les mêmes décisions sur Bitvavo.</p>
         </div>
       </div>
       <div class="indent">
@@ -361,7 +361,7 @@ date,actif,prix_cloture,action,position,valeur_poche,valeur_achat_conservation
         </div>
       </div>
       <div class="indent">
-        <div class="warn" role="note"><span class="ico">!</span><p><strong>Simulations sur données passées, pas des gains réels.</strong> Les performances passées ne préjugent pas des performances futures. Vigie n'a encore jamais tradé avec de l'argent réel.</p></div>
+        <div class="warn" role="note"><span class="ico">!</span><p><strong>Simulations sur données passées, pas des gains réels.</strong> Les performances passées ne préjugent pas des performances futures. Vigie n'est engagée en argent réel que depuis le 15 octobre 2026, avec une petite somme.</p></div>
 
         <div class="table-wrap">
           <table>
@@ -471,15 +471,15 @@ date,actif,prix_cloture,action,position,valeur_poche,valeur_achat_conservation
         <div class="bearing label">Cap 07 · Calendrier</div>
         <div>
           <h2 id="cal-t">Où en est Vigie</h2>
-          <p class="intro">Pas de précipitation. L'argent réel n'arrive qu'après un test en conditions réelles, puis par petites étapes.</p>
+          <p class="intro">Pas de précipitation. L'argent réel arrive par petites étapes, et le montant n'augmente qu'après un bilan.</p>
         </div>
       </div>
       <ol class="timeline indent">
         <li class="done"><span class="when">14 oct. 2026</span><span class="mk" aria-hidden="true"></span><div><h3>Validation des tests</h3><p>Six critères écrits à l'avance. Seule la famille de règles Donchian les passe.</p></div></li>
-        <li class="now"><span class="when">Depuis le 14 oct.</span><span class="mk" aria-hidden="true"></span><div><h3>Test sur papier, en direct</h3><p>Vigie tourne sur son serveur avec de vrais prix et un argent fictif. Le code n'est pas modifié pendant le test.</p></div></li>
-        <li><span class="when">11 nov. 2026</span><span class="mk" aria-hidden="true"></span><div><h3>Bilan des quatre semaines</h3><p>Le comportement réel est comparé à la simulation. S'il y a un problème, on s'arrête là.</p></div></li>
-        <li><span class="when">Ensuite</span><span class="mk" aria-hidden="true"></span><div><h3>Argent réel, à 10 %</h3><p>Environ un dixième du montant prévu, pendant deux à quatre semaines, sur Bitvavo, plateforme européenne.</p></div></li>
-        <li><span class="when">Puis</span><span class="mk" aria-hidden="true"></span><div><h3>Montant complet</h3><p>Seulement si l'étape précédente se déroule sans surprise.</p></div></li>
+        <li class="done"><span class="when">14 oct. 2026</span><span class="mk" aria-hidden="true"></span><div><h3>Test sur papier, en direct</h3><p>Vigie tourne sur son serveur avec de vrais prix et un argent fictif. Le code n'est pas modifié pendant le test.</p></div></li>
+        <li class="now"><span class="when">Depuis le 15 oct.</span><span class="mk" aria-hidden="true"></span><div><h3>Argent réel, à 10 %</h3><p>Environ un dixième du montant prévu, sur Bitvavo, plateforme européenne. Le test sur papier continue en parallèle pour comparer.</p></div></li>
+        <li><span class="when">11 nov. 2026</span><span class="mk" aria-hidden="true"></span><div><h3>Bilan des quatre semaines</h3><p>Le comportement réel est comparé à la simulation. Trois issues possibles : garder, augmenter ou arrêter.</p></div></li>
+        <li><span class="when">Puis</span><span class="mk" aria-hidden="true"></span><div><h3>Montant complet</h3><p>Seulement si le bilan se déroule sans surprise.</p></div></li>
         <li><span class="when">Chaque janvier</span><span class="mk" aria-hidden="true"></span><div><h3>Révision annuelle</h3><p>Données mises à jour et réglage vérifié selon la même méthode hors échantillon.</p></div></li>
       </ol>
     </div>
@@ -653,7 +653,7 @@ date,actif,prix_cloture,action,position,valeur_poche,valeur_achat_conservation
     var d=Math.floor((Date.now()-start)/864e5);
     var end=Date.UTC(2026,10,11);
     var t=document.getElementById("status-text");
-    if(d>=0 && Date.now()<end) t.textContent="Test sur papier · jour "+(d+1)+" sur 28 · aucun argent réel engagé";
+    if(d>=0 && Date.now()<end) t.textContent="Test en direct · jour "+(d+1)+" sur 28 · petite somme réelle engagée";
   }catch(e){}
 
   /* Schéma du canal de Donchian (série simulée, déterministe) */
