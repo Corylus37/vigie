@@ -374,9 +374,9 @@ footer p{margin:6px 0;max-width:80ch}
         <p>Les robots vendus en ligne montrent leurs meilleurs mois. Voici les pires scénarios de Vigie, tels que les tests les ont révélés.</p>
       </div>
       <div class="defauts">
-        <div class="carte defaut apparait"><div class="gros">−65 %</div><h3>Une chute de deux tiers reste possible</h3><p>C'est la pire baisse réaliste observée depuis 2012. La seule vraie protection est le montant confié : n'y mettre que ce qu'on accepte de voir fondre.</p></div>
-        <div class="carte defaut apparait"><div class="gros">🪂</div><h3>Le krach achète pendant la chute</h3><p>Sans stop. Une tranche achetée à −50 % peut se retrouver à −80 % avant de remonter, et rester des mois sous l'eau.</p></div>
-        <div class="carte defaut apparait"><div class="gros">2 j</div><h3>Les krachs éclairs passent entre les mailles</h3><p>Avec une décision par jour, Vigie ne peut pas réagir au milieu d'une chute de −64 % en deux jours (avril 2013).</p></div>
+        <div class="carte defaut apparait"><div class="gros">−22 %</div><h3>2022 : l'année noire</h3><p>En simulation, Vigie 2 + krach a perdu 22 % en 2022 (pire chute de −32 % depuis), pendant que Bitcoin et Ethereum perdaient environ deux tiers. Moins pire ne veut pas dire indolore, et une chute plus forte reste possible : la vraie protection, c'est le montant confié.</p></div>
+        <div class="carte defaut apparait"><div class="gros">🪂</div><h3>Le krach achète pendant la chute</h3><p>Sans stop. Une tranche achetée à −50 % peut se retrouver à −80 % avant de remonter, et rester des mois sous l'eau. En 2022, deux tranches ETH ont perdu −39 % et −18 %.</p></div>
+        <div class="carte defaut apparait"><div class="gros">2 j</div><h3>Les krachs éclairs passent entre les mailles</h3><p>Avec une décision par jour, Vigie ne peut pas réagir au milieu d'une chute brutale, comme lors de la faillite de FTX en novembre 2022. Il encaisse, puis décide à la clôture.</p></div>
         <div class="carte defaut apparait"><div class="gros">≈</div><h3>Les marchés sans direction lui coûtent</h3><p>Quand les prix montent et descendent sans tendance nette, Vigie entre et sort à contretemps, et fait moins bien qu'acheter et garder.</p></div>
         <div class="carte defaut apparait"><div class="gros">🎲</div><h3>La 3e place reste une loterie</h3><p>Le résultat dépend beaucoup de la présence d'une future gagnante dans la liste de l'année. Elle est choisie chaque 1er janvier, sans recul.</p></div>
         <div class="carte defaut apparait"><div class="gros">0</div><h3>Aucun historique réel, encore</h3><p>Tous les chiffres longs sont des simulations. Le carnet de bord, lui, ne fait que commencer : il faudra des mois pour juger.</p></div>
@@ -750,7 +750,7 @@ function majHeros() {
   var w = valeurVive(), r = w.v / ETAT.capital - 1;
   animerNombre(w.v);
   $("h-val").style.color = r > 0.0005 ? "var(--vert)" : r < -0.0005 ? "var(--rouge)" : "var(--texte)";
-  $("h-sous").textContent = pc(r, 2) + " depuis le 14/11/2026 · acheter-garder " + pc(w.bh / ETAT.capital - 1, 1) + " · 1 000 $ de référence";
+  $("h-sous").textContent = pc(r, 2) + " depuis la mise en service le 15/11/2026 · acheter-garder " + pc(w.bh / ETAT.capital - 1, 1) + " · 1 000 $ de référence";
 }
 
 // ------------------------------------------------------------ radar
@@ -980,15 +980,16 @@ function majCarnet() {
 }
 function journal() {
   var L = [], j0 = SIM.courbe.length ? SIM.courbe[0].j : LANCEMENT;
-  var lig = function (j, cls, t) { L.push('<span class="d">[' + dateFr(j) + "]</span> <span class=\"" + cls + '">' + t + "</span>"); };
-  lig(j0, "in", "▶ lancement · 1 000 $ de référence · 3 poches à l'abri en USDC");
+  var nuit = function (j) { return "nuit du " + dateFr(j, false).slice(0, 2) + " au " + dateFr(j + 1, false); };
+  var lig = function (j, cls, t) { L.push('<span class="d">[' + nuit(j) + "]</span> <span class=\"" + cls + '">' + t + "</span>"); };
+  L.push('<span class="d">[15/11/2026 · mise en service]</span> <span class="in">▶ 1 000 $ de référence · 3 poches à l\'abri en USDC · première clôture lue : celle du ' + dateFr(j0, false) + "</span>");
   ["BTC", "ETH"].forEach(function (c) {
     var deja = (ETAT.dejaLancement && ETAT.dejaLancement[c]) || [];
     var d = V.close(P[c], j0) / P[c].som[j0 - P[c].d0] - 1;
-    L.push('<span class="d">             └ </span>' + c + " : " + pc(d) + " sous le sommet · " + (deja.length ? "palier " + deja.map(function (i) { return "−" + Math.round(V.PALIERS[i] * 100) + " %"; }).join(", ") + " déjà franchi (pas de rattrapage) → " + (3 - deja.length) + " tranches disponibles" : "3 tranches krach disponibles"));
+    L.push('<span class="d">   └ </span>' + c + " : " + pc(d) + " sous le sommet · " + (deja.length ? "palier " + deja.map(function (i) { return "−" + Math.round(V.PALIERS[i] * 100) + " %"; }).join(", ") + " déjà franchi (pas de rattrapage) → " + (3 - deja.length) + " tranches disponibles" : "3 tranches krach disponibles"));
   });
   SIM.courbe.forEach(function (r, i) {
-    if (r.desig) { var dz = r.desig; L.push('<span class="d">[' + dateFr(r.j) + ']</span> <span class="in">🏁 3e place : ' + (dz.crypto || "aucune crypto en hausse") + (dz.crypto ? " désignée (" + pc(dz.scores[dz.crypto]) + " en 12 semaines, classement du dimanche " + dateFr(dz.dimanche, false) + ")" : "") + "</span>"); }
+    if (r.desig) { var dz = r.desig; L.push('<span class="d">[' + nuit(r.j) + ']</span> <span class="in">🏁 3e place : ' + (dz.crypto || "aucune crypto en hausse") + (dz.crypto ? " désignée (" + pc(dz.scores[dz.crypto]) + " en 12 semaines, classement du dimanche " + dateFr(dz.dimanche, false) + ")" : "") + "</span>"); }
     if (r.ev.length) r.ev.forEach(function (e) {
       var cls = e.action.indexOf("KRACH") >= 0 || e.action.indexOf("gardée") >= 0 ? "kr" : e.action.indexOf("ACHAT") === 0 ? "ok" : "ko";
       var ic = cls === "kr" ? "🪂" : cls === "ok" ? "🟢" : "🔴";
