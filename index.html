@@ -87,6 +87,8 @@ section.bloc{padding:96px 0;border-top:1px solid var(--trait)}
 @media(max-width:980px){.poches{grid-template-columns:1fr}}
 .poche h3{margin:0;display:flex;align-items:center;gap:10px;min-height:34px;font:800 22px/1 var(--display);font-stretch:112%}
 .jeton{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 13px/1 var(--mono);color:#081018}
+.jeton.logo{background:transparent!important}
+.jeton img{width:100%;height:100%;object-fit:contain;display:block}
 .etat{margin-left:auto;white-space:nowrap;font:600 11.5px/1 var(--mono);letter-spacing:.08em;padding:6px 9px;border-radius:999px;border:1px solid}
 .etat.abri{color:var(--cyan);border-color:rgba(63,216,255,.4);background:rgba(63,216,255,.08)}
 .etat.investi{color:var(--vert);border-color:rgba(53,227,154,.45);background:rgba(53,227,154,.09)}
@@ -819,6 +821,10 @@ function ciel(t) {
 }
 
 // ------------------------------------------------------------ cartes des poches
+// Logos : si un fichier logos/<CRYPTO>.svg (ou .png) existe dans le dépôt, il remplace la pastille ; sinon, la lettre reste.
+function jetonHTML(c) {
+  return '<img src="logos/' + c + '.svg" alt="' + c + '" onload="this.parentNode.classList.add(\'logo\')" onerror="if(this.src.slice(-4)===\'.svg\'){this.src=\'logos/' + c + '.png\'}else{this.parentNode.textContent=\'' + c[0] + '\'}">';
+}
 function carteHTML(n) {
   return '<div class="carte poche apparait" id="poche-' + n + '">' +
     '<h3><span class="jeton" data-k="jeton"></span><span data-k="titre"></span><span class="etat" data-k="etat"></span></h3>' +
@@ -840,7 +846,7 @@ function majPoche(n, leger) {
   var f = Math.max(0, Math.min(1, (x - s.vente) / (s.achat - s.vente)));
   q(n, "curseur").style.left = (f * 100) + "%";
   if (leger) return;
-  var j = q(n, "jeton"); j.textContent = c.slice(0, 1); j.style.background = COULEUR[c];
+  var j = q(n, "jeton"); if (j.dataset.c !== c) { j.dataset.c = c; j.classList.remove("logo"); j.innerHTML = jetonHTML(c); } j.style.background = COULEUR[c];
   q(n, "titre").innerHTML = NOMS[c] + (n === "ROT" ? ' <small style="font:600 11px/1 var(--mono);color:var(--balise);letter-spacing:.08em">3E PLACE</small>' : "");
   var e = q(n, "etat");
   if (p.unites > 0 && n !== "ROT" && p.vigie === 0) { e.className = "etat krach"; e.textContent = "🪂 TRANCHES"; }
@@ -949,7 +955,7 @@ function majCourse() {
   cands.forEach(function (c) { if (!P[c]) return; var b = V.close(P[c], passe); sc[c] = b > 0 ? prixVif(c) / b - 1 : NaN; if (sc[c] === sc[c]) mx = Math.max(mx, Math.abs(sc[c])); if (off.scores[c] !== undefined) mx = Math.max(mx, Math.abs(off.scores[c])); });
   var ordre = cands.filter(function (c) { return sc[c] === sc[c]; }).sort(function (a, b) { return sc[b] - sc[a]; });
   var z = $("course-rails");
-  if (!z.dataset.ok) { z.innerHTML = cands.map(function (c) { return '<div class="couloir" id="cl-' + c + '"><div class="nom"><span class="jeton" style="width:24px;height:24px;font-size:10px;background:' + COULEUR[c] + '">' + c[0] + "</span>" + c + '<span data-k="cr"></span></div><div class="rail"><span class="milieu"></span><span class="jauge"></span><span class="officiel"></span></div><div class="score mono"></div></div>'; }).join(""); z.dataset.ok = 1; }
+  if (!z.dataset.ok) { z.innerHTML = cands.map(function (c) { return '<div class="couloir" id="cl-' + c + '"><div class="nom"><span class="jeton" style="width:24px;height:24px;font-size:10px;background:' + COULEUR[c] + '">' + jetonHTML(c) + "</span>" + c + '<span data-k="cr"></span></div><div class="rail"><span class="milieu"></span><span class="jauge"></span><span class="officiel"></span></div><div class="score mono"></div></div>'; }).join(""); z.dataset.ok = 1; }
   cands.forEach(function (c, i) {
     var r = $("cl-" + c); if (!r) return;
     var s = sc[c], j = r.querySelector(".jauge"), o = r.querySelector(".officiel"), larg = s === s ? Math.abs(s) / mx * 48 : 0;
