@@ -229,7 +229,7 @@ footer p{margin:6px 0;max-width:80ch}
         <h1>La vigie<br>ne dort <span class="lueur">jamais.</span></h1>
         <p class="chapo"><b>Vigie suit la tendance pour vous, sans émotion.</b> Une seule décision par nuit, à la clôture de minuit UTC : investie, ou à l'abri en stablecoin. Et quand le marché s'effondre, elle <b>descend chercher des tranches</b> au fond du krach. Tout se passe ici, en direct, sous vos yeux.</p>
         <div class="compteur" aria-live="polite">
-          <span class="lib">Portefeuille de Vigie · depuis la mise en service</span>
+          <span class="lib">1 000 € placés le 15/11/2026 · aujourd'hui</span>
           <span class="val" id="h-val">—</span>
           <span class="sous" id="h-sous">calcul en cours…</span>
         </div>
@@ -304,14 +304,14 @@ footer p{margin:6px 0;max-width:80ch}
       <div class="tete apparait">
         <div class="surtitre">Cap 04 · Le carnet de bord</div>
         <h2>Depuis la mise en service.</h2>
-        <p>Le portefeuille de référence de Vigie, 1 000 $ au départ, recalculé ici avec exactement le même moteur que Vigie elle-même, à partir des mêmes clôtures. Chaque nuit, une ligne de plus.</p>
+        <p>Les décisions de Vigie depuis sa mise en service, recalculées ici avec exactement le même moteur que Vigie elle-même, à partir des mêmes clôtures. Chaque nuit, une ligne de plus.</p>
       </div>
       <div class="carnet">
         <div class="carte apparait">
           <div class="surtitre" id="c-jour">Jour —</div>
           <div class="gros mono" id="c-val">—</div>
           <div class="duo">
-            <div><div class="k">Vigie</div><div class="v" id="c-vig">—</div></div>
+            <div><div class="k">1 000 € placés</div><div class="v" id="c-vig">—</div></div>
             <div><div class="k">Acheter-garder BTC·ETH·SOL</div><div class="v" id="c-bh">—</div></div>
             <div><div class="k">Ordres passés</div><div class="v" id="c-ord">—</div></div>
             <div><div class="k">Investi en ce moment</div><div class="v" id="c-inv">—</div></div>
@@ -328,7 +328,7 @@ footer p{margin:6px 0;max-width:80ch}
       <div class="tete apparait">
         <div class="surtitre">Cap 05 · Rejouer l'histoire</div>
         <h2>Et si vous aviez commencé…</h2>
-        <p>Choisissez un point de départ et regardez Vigie traverser le marché jour après jour, krachs compris, face à « acheter et garder ».</p>
+        <p>Choisissez un point de départ, placez 1 000 € et regardez Vigie traverser le marché jour après jour, krachs compris, face à « acheter et garder ».</p>
       </div>
       <div class="carte apparait">
         <div class="rejeu-haut" id="departs"></div>
@@ -347,7 +347,7 @@ footer p{margin:6px 0;max-width:80ch}
           <div><div class="k">Pire chute Vigie</div><div class="v" id="r-dd">—</div></div>
           <div><div class="k">Pire chute acheter-garder</div><div class="v" id="r-ddbh">—</div></div>
         </div>
-        <div class="avert">🧪 <span>Simulation sur données passées (clôtures Binance, 0,15 % de frais et glissement par ordre), avec le moteur de Vigie. Le passé ne garantit rien : c'est une démonstration, pas une promesse.</span></div>
+        <div class="avert">🧪 <span>Simulation sur données passées (clôtures Binance, 0,15 % de frais et glissement par ordre), avec le moteur de Vigie, hors variation de l'euro face au dollar. Le passé ne garantit rien : c'est une démonstration, pas une promesse.</span></div>
       </div>
     </div>
   </section>
@@ -626,6 +626,8 @@ var reduit = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)")
 var nf = function (d) { return new Intl.NumberFormat("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
 var F0 = nf(0), F2 = nf(2);
 function dollars(x, d) { return (d === 0 ? F0 : F2).format(x) + " $"; }
+function euros(x, d) { return (d === 0 ? F0 : F2).format(x) + " €"; }
+var PLACE = 1000; // euros réellement placés le 15/11/2026
 function prixTxt(x) { return x >= 1000 ? F0.format(x) : x >= 1 ? F2.format(x) : nf(4).format(x); }
 function pc(x, d) { if (x !== x) return "—"; var s = nf(d === undefined ? 1 : d).format(Math.abs(x * 100)); return (x > 0 ? "+" : x < 0 ? "−" : "") + s + " %"; }
 function dateFr(j, an) { var d = new Date(j * JOUR); return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: an === false ? undefined : "numeric", timeZone: "UTC" }); }
@@ -746,15 +748,15 @@ function prochain(n) {
 // ------------------------------------------------------------ héros : compteur animé
 var affiche = { v: null };
 function animerNombre(cible) {
-  if (affiche.v === null || reduit) { affiche.v = cible; $("h-val").textContent = dollars(cible); return; }
+  if (affiche.v === null || reduit) { affiche.v = cible; $("h-val").textContent = "≈ " + euros(cible); return; }
   var depart = affiche.v, t0 = performance.now();
-  (function pas(t) { var k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); affiche.v = depart + (cible - depart) * e; $("h-val").textContent = dollars(affiche.v); if (k < 1) requestAnimationFrame(pas); })(t0);
+  (function pas(t) { var k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); affiche.v = depart + (cible - depart) * e; $("h-val").textContent = "≈ " + euros(affiche.v); if (k < 1) requestAnimationFrame(pas); })(t0);
 }
 function majHeros() {
   var w = valeurVive(), r = w.v / ETAT.capital - 1;
-  animerNombre(w.v);
+  animerNombre(PLACE * (1 + r));
   $("h-val").style.color = r > 0.0005 ? "var(--vert)" : r < -0.0005 ? "var(--rouge)" : "var(--texte)";
-  $("h-sous").textContent = pc(r, 2) + " depuis la mise en service le 15/11/2026 · acheter-garder " + pc(w.bh / ETAT.capital - 1, 1) + " · 1 000 $ de référence";
+  $("h-sous").textContent = pc(r, 2) + " depuis la mise en service · acheter-garder " + pc(w.bh / ETAT.capital - 1, 1) + " · hors variation de l'euro face au dollar";
 }
 
 // ------------------------------------------------------------ radar
@@ -866,7 +868,7 @@ function majPoche(n, leger) {
   } else if (ETAT.designation) {
     lignes.push(["Désignée le " + dateFr(ETAT.designation.dimanche, false), pc(ETAT.designation.scores[ETAT.designation.crypto] || NaN) + " en 12 sem."]);
   }
-  lignes.push(["Poche", dollars(val) + " · " + Math.round(V.part(p, px) * 100) + " % investi"]);
+  lignes.push(["Investi", Math.round(V.part(p, px) * 100) + " % de la poche"]);
   q(n, "lignes").innerHTML = lignes.map(function (l) { return "<div><span>" + l[0] + '</span><span class="mono">' + l[1] + "</span></div>"; }).join("");
   dessinerMini(n, c);
 }
@@ -979,8 +981,8 @@ function majCourse() {
 function majCarnet() {
   var w = valeurVive(), r = w.v / ETAT.capital - 1, rb = w.bh / ETAT.capital - 1;
   $("c-jour").textContent = "Jour " + Math.max(1, aujourdhui() - MISE_EN_SERVICE + 1) + " · en service depuis le 15/11/2026";
-  $("c-val").textContent = dollars(w.v); $("c-val").style.color = r >= 0 ? "var(--texte)" : "var(--rouge)";
-  $("c-vig").textContent = pc(r, 2); $("c-vig").style.color = r > 0.0005 ? "var(--vert)" : r < -0.0005 ? "var(--rouge)" : "var(--texte)";
+  $("c-val").textContent = pc(r, 2); $("c-val").style.color = r > 0.0005 ? "var(--vert)" : r < -0.0005 ? "var(--rouge)" : "var(--texte)";
+  $("c-vig").textContent = "≈ " + euros(PLACE * (1 + r)); $("c-vig").style.color = "var(--texte)";
   $("c-bh").textContent = pc(rb, 2); $("c-bh").style.color = rb >= 0 ? "var(--vert)" : "var(--rouge)";
   $("c-ord").textContent = SIM.ev.length;
   var inv = 0; ["BTC", "ETH", "ROT"].forEach(function (n) { var p = ETAT.poches[n]; if (p.unites > 0) inv += p.unites * w.px[p.crypto]; });
@@ -990,7 +992,7 @@ function journal() {
   var L = [], j0 = SIM.courbe.length ? SIM.courbe[0].j : LANCEMENT;
   var nuit = function (j) { return "nuit du " + dateFr(j, false).slice(0, 2) + " au " + dateFr(j + 1, false); };
   var lig = function (j, cls, t) { L.push('<span class="d">[' + nuit(j) + "]</span> <span class=\"" + cls + '">' + t + "</span>"); };
-  L.push('<span class="d">[15/11/2026 · mise en service]</span> <span class="in">▶ 1 000 $ de référence · 3 poches à l\'abri en USDC · première clôture lue : celle du ' + dateFr(j0, false) + "</span>");
+  L.push('<span class="d">[15/11/2026 · mise en service]</span> <span class="in">▶ 1 000 € placés · 3 poches à l\'abri en USDC · première clôture lue : celle du ' + dateFr(j0, false) + "</span>");
   ["BTC", "ETH"].forEach(function (c) {
     var deja = (ETAT.dejaLancement && ETAT.dejaLancement[c]) || [];
     var d = V.close(P[c], j0) / P[c].som[j0 - P[c].d0] - 1;
@@ -1003,7 +1005,7 @@ function journal() {
       var ic = cls === "kr" ? "🪂" : cls === "ok" ? "🟢" : "🔴";
       lig(r.j, cls, ic + " " + e.action + " " + e.crypto + " à " + prixTxt(e.prix) + " $ · " + e.detail);
     });
-    else if (i > 0 || !r.desig) lig(r.j, "d", "clôture · rien à signaler · portefeuille " + dollars(r.total));
+    else if (i > 0 || !r.desig) lig(r.j, "d", "clôture · rien à signaler · rendement " + pc(r.total / 1000 - 1, 2));
   });
   L.push('<span class="d">[maintenant]</span> <span class="in">la vigie veille · prochaine décision dans <span id="j-dec">…</span></span> <span class="curseur-t"></span>');
   var z = $("journal"); z.innerHTML = L.join("\n"); z.scrollTop = z.scrollHeight;
@@ -1026,7 +1028,7 @@ function dessinerRejeu(final) {
   g.clearRect(0, 0, w, h);
   g.font = "500 10.5px JetBrains Mono, monospace"; g.fillStyle = "#5d7586"; g.strokeStyle = "rgba(140,190,220,.1)"; g.lineWidth = 1;
   var pas = [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000, 12000, 16000];
-  pas.forEach(function (v) { if (v < mn || v > mx) return; var y = Y(v); g.beginPath(); g.moveTo(L, y); g.lineTo(w - Rm, y); g.stroke(); g.fillText(F0.format(v) + " $", 4, y + 3); });
+  pas.forEach(function (v) { if (v < mn || v > mx) return; var y = Y(v); g.beginPath(); g.moveTo(L, y); g.lineTo(w - Rm, y); g.stroke(); g.fillText(F0.format(v) + " €", 4, y + 3); });
   var y1000 = Y(1000); g.strokeStyle = "rgba(255,174,43,.35)"; g.setLineDash([5, 5]); g.beginPath(); g.moveTo(L, y1000); g.lineTo(w - Rm, y1000); g.stroke(); g.setLineDash([]);
   var an0 = new Date(C[0].j * JOUR).getUTCFullYear();
   for (var a = an0 + 1; a <= new Date(C[C.length - 1].j * JOUR).getUTCFullYear(); a++) { var ja = V.jourNum(a + "-01-01"), ia = ja - C[0].j; if (ia > 0 && ia < C.length) { var xa = X(ia); g.strokeStyle = "rgba(140,190,220,.08)"; g.beginPath(); g.moveTo(xa, H); g.lineTo(xa, h - B); g.stroke(); g.fillText(a, xa + 4, h - 10); } }
@@ -1049,8 +1051,8 @@ function dessinerRejeu(final) {
   g.font = "600 11px JetBrains Mono, monospace"; g.fillStyle = "#ffae2b"; g.fillText("Vigie 2 + krach", L + 6, H + 4); g.fillStyle = "#8ea6b6"; g.fillText("- - acheter-garder BTC·ETH·SOL", L + 130, H + 4);
   var r = C[n - 1];
   $("r-date").textContent = dateFr(r.j);
-  $("r-vig").textContent = dollars(r.total, 0) + " " + pc(r.total / 1000 - 1, 0); $("r-vig").style.color = r.total >= 1000 ? "var(--vert)" : "var(--rouge)";
-  $("r-bh").textContent = dollars(r.bh, 0) + " " + pc(r.bh / 1000 - 1, 0); $("r-bh").style.color = r.bh >= 1000 ? "var(--vert)" : "var(--rouge)";
+  $("r-vig").textContent = euros(r.total, 0) + " " + pc(r.total / 1000 - 1, 0); $("r-vig").style.color = r.total >= 1000 ? "var(--vert)" : "var(--rouge)";
+  $("r-bh").textContent = euros(r.bh, 0) + " " + pc(r.bh / 1000 - 1, 0); $("r-bh").style.color = r.bh >= 1000 ? "var(--vert)" : "var(--rouge)";
   $("r-dd").textContent = pc(chute(C, n, "total"), 0); $("r-ddbh").textContent = pc(chute(C, n, "bh"), 0);
 }
 function boucleRejeu() {
