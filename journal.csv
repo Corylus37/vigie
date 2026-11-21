@@ -113,3 +113,6 @@ date,actif,prix_cloture,action,position,valeur_poche,valeur_achat_conservation
 2026-11-19,BTC,61986.73,ACHAT,investi,333.1667,321.6095
 2026-11-19,ETH,1757.32,garder,stablecoin,333.3333,330.5984
 2026-11-19,SOL,73.15,garder,stablecoin,333.3333,346.4251
+2026-11-20,BTC,58951.51,garder,investi,327.7342,305.8617
+2026-11-20,ETH,1623.09,ACHAT,investi,333.1667,305.3462
+2026-11-20,SOL,68.88,garder,stablecoin,333.3333,326.2032
